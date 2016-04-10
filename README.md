@@ -45,13 +45,13 @@ iPad's
 ## How to Record iOS Devices Screen Video?
 
 1.Click the record button,wait state from ready to time display.
-![image](https://github.com/xindawndev/RecordMyScreen-iOS/tree/master/IMG_0515.PNG)
+![image](https://github.com/xindawndev/RecordMyScreen-iOS/blob/master/IMG_0515.PNG)
 
 2.Once configured, go to the app you would like to record and swipe up on the screen.
-![image](https://github.com/xindawndev/RecordMyScreen-iOS/tree/master/IMG_0517.PNG)
+![image](https://github.com/xindawndev/RecordMyScreen-iOS/blob/master/IMG_0517.PNG)
 
 3.Tap Airplay, select XBMC-GAMEBOX(Xindawn), and finally if you see the option turn on 'Mirroring'
-![image](https://github.com/xindawndev/RecordMyScreen-iOS/tree/master/IMG_0518.PNG)
+![image](https://github.com/xindawndev/RecordMyScreen-iOS/blob/master/IMG_0518.PNG)
 
 4.Once you are finished,simply swipe up again, tap Airplay and tap on you device name
-![image](https://github.com/xindawndev/RecordMyScreen-iOS/tree/master/IMG_0519.PNG)
+![image](https://github.com/xindawndev/RecordMyScreen-iOS/blob/master/IMG_0519.PNG)
