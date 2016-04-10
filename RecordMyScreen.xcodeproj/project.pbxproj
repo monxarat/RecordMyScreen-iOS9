@@ -41,7 +41,6 @@
 		38E6ECBE16ACA3FE000BECC2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38E6ECBC16ACA3F9000BECC2 /* MessageUI.framework */; };
 		38E6ECC116ACB77D000BECC2 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 38E6ECBF16ACB77D000BECC2 /* settings.png */; };
 		38E6ECC216ACB77D000BECC2 /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38E6ECC016ACB77D000BECC2 /* settings@2x.png */; };
-		8ECF16F31697E07400DBA7D2 /* GraphicsServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ECF16F21697E07400DBA7D2 /* GraphicsServices.framework */; };
 		8ECF16F51697E0A000DBA7D2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ECF16F41697E0A000DBA7D2 /* QuartzCore.framework */; };
 		B1B20AF8170A347900FD881C /* SAResizibleBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B20AD5170A347900FD881C /* SAResizibleBubble.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B1B20AF9170A347900FD881C /* SASliderLeft.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B20AD7170A347900FD881C /* SASliderLeft.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -135,7 +134,6 @@
 		38E6ECBC16ACA3F9000BECC2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		38E6ECBF16ACB77D000BECC2 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		38E6ECC016ACB77D000BECC2 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
-		8ECF16F21697E07400DBA7D2 /* GraphicsServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GraphicsServices.framework; path = System/Library/PrivateFrameworks/GraphicsServices.framework; sourceTree = SDKROOT; };
 		8ECF16F41697E0A000DBA7D2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B1B20AD4170A347900FD881C /* SAResizibleBubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAResizibleBubble.h; sourceTree = "<group>"; };
 		B1B20AD5170A347900FD881C /* SAResizibleBubble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAResizibleBubble.m; sourceTree = "<group>"; };
@@ -206,7 +204,6 @@
 				E184A98C1CB66FC1005E771B /* libairplaysdk-2.a in Frameworks */,
 				382758F91692563A000D537C /* CoreVideo.framework in Frameworks */,
 				389BCCFC169010CF00877CA5 /* Foundation.framework in Frameworks */,
-				8ECF16F31697E07400DBA7D2 /* GraphicsServices.framework in Frameworks */,
 				E184A98E1CB671E7005E771B /* libairplaysdk-1.a in Frameworks */,
 				38114EDD1692F83C00BE64B4 /* MediaPlayer.framework in Frameworks */,
 				38E6ECBE16ACA3FE000BECC2 /* MessageUI.framework in Frameworks */,
@@ -327,7 +324,6 @@
 				382758FA16925657000D537C /* CoreMedia.framework */,
 				382758F716925634000D537C /* CoreVideo.framework */,
 				389BCCFB169010CF00877CA5 /* Foundation.framework */,
-				8ECF16F21697E07400DBA7D2 /* GraphicsServices.framework */,
 				38114EDB1692F82E00BE64B4 /* MediaPlayer.framework */,
 				38E6ECBC16ACA3F9000BECC2 /* MessageUI.framework */,
 				8ECF16F41697E0A000DBA7D2 /* QuartzCore.framework */,
