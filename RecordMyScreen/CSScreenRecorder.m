@@ -115,7 +115,12 @@ MP4TrackId    m_videoId = MP4_INVALID_TRACK_ID;
 MP4TrackId    m_audioId = MP4_INVALID_TRACK_ID;
 static int    mp4_init_flag = 0;
 
+#define SAVE_264_ENABLE 0
 
+
+#if SAVE_264_ENABLE
+FILE  *m_handle = NULL;
+#endif
 
 
 void video_open(void *cls,int width,int height,const void *buffer, int buflen, int payloadtype, double timestamp)
@@ -222,6 +227,61 @@ void video_open(void *cls,int width,int height,const void *buffer, int buflen, i
     
     
     
+#if SAVE_264_ENABLE
+    {
+        NSString *fileName264 = [Utilities documentsPath:[NSString stringWithFormat:@"XinDawnRec-%04d.264",rand()]];
+        
+        m_handle = fopen([fileName264 cStringUsingEncoding: NSUTF8StringEncoding], "wb");
+        
+        
+        
+        int spscnt;
+        int spsnalsize;
+        int ppscnt;
+        int ppsnalsize;
+        
+        unsigned    char *head = (unsigned  char *)buffer;
+        
+        
+        
+        
+        spscnt = head[5] & 0x1f;
+        spsnalsize = ((uint32_t)head[6] << 8) | ((uint32_t)head[7]);
+        ppscnt = head[8 + spsnalsize];
+        ppsnalsize = ((uint32_t)head[9 + spsnalsize] << 8) | ((uint32_t)head[10 + spsnalsize]);
+        
+        
+        unsigned char *data = (unsigned char *)malloc(4 + spsnalsize + 4 + ppsnalsize);
+        
+        
+        data[0] = 0;
+        data[1] = 0;
+        data[2] = 0;
+        data[3] = 1;
+        
+        memcpy(data + 4, head + 8, spsnalsize);
+        
+        data[4 + spsnalsize] = 0;
+        data[5 + spsnalsize] = 0;
+        data[6 + spsnalsize] = 0;
+        data[7 + spsnalsize] = 1;
+        
+        memcpy(data + 8 + spsnalsize, head + 11 + spsnalsize, ppsnalsize);
+        
+        
+        fwrite(data,1,4 + spsnalsize + 4 + ppsnalsize,m_handle);
+        
+        
+        free(data);
+        
+        
+    }
+    
+#endif
+    
+    
+    
+    
     mp4_init_flag = 1;
     
     
@@ -256,6 +316,47 @@ void video_process(void *cls,const void *buffer, int buflen, int payloadtype, do
             
             data = (unsigned char *)buffer + rLen;
         }
+        
+        
+#if SAVE_264_ENABLE
+        {
+            
+            
+            int		    rLen;
+            unsigned    char *head;
+            
+            
+            
+            unsigned char *data = (unsigned char *)malloc(buflen);
+            memcpy(data, buffer, buflen);
+            
+            
+            
+            rLen = 0;
+            head = (unsigned char *)data + rLen;
+            while (rLen < buflen)
+            {
+                rLen += 4;
+                rLen += (((uint32_t)head[0] << 24) | ((uint32_t)head[1] << 16) | ((uint32_t)head[2] << 8) | (uint32_t)head[3]);
+                
+                head[0] = 0;
+                head[1] = 0;
+                head[2] = 0;
+                head[3] = 1;
+                
+                head = (unsigned char *)data + rLen;
+            }
+            
+            
+            
+            fwrite(data,1,buflen,m_handle);
+            
+            free(data);
+            
+            
+        }
+#endif
+        
     }
 #if 0
     else if (payloadtype == 1)
@@ -304,8 +405,59 @@ void video_process(void *cls,const void *buffer, int buflen, int payloadtype, do
         free(sps);
         free(pps);
         
+        
+#if SAVE_264_ENABLE
+        {
+            int spscnt;
+            int spsnalsize;
+            int ppscnt;
+            int ppsnalsize;
+            
+            unsigned    char *head = (unsigned  char *)buffer;
+            
+            
+            
+            
+            spscnt = head[5] & 0x1f;
+            spsnalsize = ((uint32_t)head[6] << 8) | ((uint32_t)head[7]);
+            ppscnt = head[8 + spsnalsize];
+            ppsnalsize = ((uint32_t)head[9 + spsnalsize] << 8) | ((uint32_t)head[10 + spsnalsize]);
+            
+            
+            unsigned char *data = (unsigned char *)malloc(4 + spsnalsize + 4 + ppsnalsize);
+            
+            
+            data[0] = 0;
+            data[1] = 0;
+            data[2] = 0;
+            data[3] = 1;
+            
+            memcpy(data + 4, head + 8, spsnalsize);
+            
+            data[4 + spsnalsize] = 0;
+            data[5 + spsnalsize] = 0;
+            data[6 + spsnalsize] = 0;
+            data[7 + spsnalsize] = 1;
+            
+            memcpy(data + 8 + spsnalsize, head + 11 + spsnalsize, ppsnalsize);
+            
+            
+            fwrite(data,1,4 + spsnalsize + 4 + ppsnalsize,m_handle);
+            
+            
+            free(data);
+            
+            
+        }
+        
+#endif
+        
     }
 #endif
+    
+    
+
+    
     
     printf("=====video====%f====\n",timestamp);
     
@@ -320,6 +472,11 @@ void video_stop(void *cls)
         hMp4file = NULL;
     }
     mp4_init_flag = 0;
+    
+    
+#if SAVE_264_ENABLE
+    fclose(m_handle);
+#endif
     
     printf("=====video_stop========\n");
     
