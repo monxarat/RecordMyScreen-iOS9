@@ -18,6 +18,7 @@
 #include "Utilities.h"
 #include "mediaserver.h"
 #include "mp4v2/mp4v2.h"
+#include <pthread.h>
 
 void CARenderServerRenderDisplay(kern_return_t a, CFStringRef b, IOSurfaceRef surface, int x, int y);
 
@@ -114,8 +115,9 @@ MP4FileHandle hMp4file = MP4_INVALID_FILE_HANDLE;
 MP4TrackId    m_videoId = MP4_INVALID_TRACK_ID;
 MP4TrackId    m_audioId = MP4_INVALID_TRACK_ID;
 static int    mp4_init_flag = 0;
+pthread_mutex_t write_mutex;
 
-#define SAVE_264_ENABLE 0
+#define SAVE_264_ENABLE 1
 
 
 #if SAVE_264_ENABLE
@@ -281,6 +283,7 @@ void video_open(void *cls,int width,int height,const void *buffer, int buflen, i
     
     
     
+    pthread_mutex_init(&write_mutex, NULL);
     
     mp4_init_flag = 1;
     
@@ -290,32 +293,27 @@ void video_open(void *cls,int width,int height,const void *buffer, int buflen, i
 
 void video_process(void *cls,const void *buffer, int buflen, int payloadtype, double timestamp)
 {
-    int		    rLen;
-    int			nalSize;
-    unsigned    char *data;
+
     
     while (!mp4_init_flag)
     {
         usleep(1000);
     }
     
+    
+
+    
+  
     if (payloadtype == 0)
     {
-        
-        rLen = 0;
-        data = (unsigned char *)buffer + rLen;
-        
-        while (rLen < buflen)
+    
+
+        pthread_mutex_lock(&write_mutex);
+        if(hMp4file)
         {
-            
-            rLen += 4;
-            nalSize = (((uint32_t)data[0] << 24) | ((uint32_t)data[1] << 16) | ((uint32_t)data[2] << 8) | (uint32_t)data[3]);
-            rLen += nalSize;
-            
-            MP4WriteSample(hMp4file, m_videoId, data, nalSize + 4, MP4_INVALID_DURATION, 0, 1);
-            
-            data = (unsigned char *)buffer + rLen;
+            MP4WriteSample(hMp4file, m_videoId, buffer, buflen, MP4_INVALID_DURATION, 0, 0);
         }
+        pthread_mutex_unlock(&write_mutex);
         
         
 #if SAVE_264_ENABLE
@@ -459,18 +457,21 @@ void video_process(void *cls,const void *buffer, int buflen, int payloadtype, do
 
     
     
-    printf("=====video====%f====\n",timestamp);
+   // printf("=====video====%f====\n",timestamp);
     
 }
 
 void video_stop(void *cls)
 {
-    
+     pthread_mutex_lock(&write_mutex);
     if (hMp4file)
     {
         MP4Close(hMp4file,0);
         hMp4file = NULL;
     }
+    pthread_mutex_unlock(&write_mutex);
+    
+    pthread_mutex_destroy(&write_mutex);
     mp4_init_flag = 0;
     
     
@@ -502,9 +503,13 @@ void audio_process(void *cls,const void *buffer, int buflen, double timestamp, u
         usleep(1000);
     }
     
-    
-    MP4WriteSample(hMp4file, m_audioId, buffer, buflen, MP4_INVALID_DURATION, 0, 1);
-    printf("=====audio====%f====\n",timestamp);
+    pthread_mutex_lock(&write_mutex);
+    if (hMp4file)
+    {
+        MP4WriteSample(hMp4file, m_audioId, buffer, buflen, MP4_INVALID_DURATION, 0, 1);
+    }
+    pthread_mutex_unlock(&write_mutex);
+    //printf("=====audio====%f====\n",timestamp);
 }
 
 
