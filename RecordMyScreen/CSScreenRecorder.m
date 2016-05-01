@@ -117,7 +117,7 @@ MP4TrackId    m_audioId = MP4_INVALID_TRACK_ID;
 static int    mp4_init_flag = 0;
 pthread_mutex_t write_mutex;
 
-#define SAVE_264_ENABLE 1
+#define SAVE_264_ENABLE 0
 
 
 #if SAVE_264_ENABLE

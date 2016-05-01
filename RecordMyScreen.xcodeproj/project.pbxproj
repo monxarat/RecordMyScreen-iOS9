@@ -686,12 +686,7 @@
 		389BCD28169010CF00877CA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					armv7,
-					arm64,
-					i386,
-					x86_64,
-				);
+				ARCHS = arm64;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -722,7 +717,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "armv7 arm64 i386 x86_64";
+				VALID_ARCHS = arm64;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -730,12 +725,7 @@
 		389BCD29169010CF00877CA5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					armv7,
-					arm64,
-					i386,
-					x86_64,
-				);
+				ARCHS = arm64;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -766,7 +756,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "armv7 arm64 i386 x86_64";
+				VALID_ARCHS = arm64;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
